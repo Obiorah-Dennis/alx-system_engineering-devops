@@ -1,2 +1,2 @@
 #!/bin/bash
-find /path -printf '%T+ %p\n' | sort -r | head
+ls -t | head
