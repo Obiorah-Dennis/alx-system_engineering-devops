@@ -3,6 +3,6 @@
 
 for i in {1..10}
 do
-  echo "Best School\n"
+  echo "Best School"
 done
 
