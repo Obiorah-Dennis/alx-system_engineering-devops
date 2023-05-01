@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# This script is displaying "bash pid"
+
+
+echo "Lines containing the word 'bash' in the process list:"
+
+ps aux | grep bash | awk '{print $2}'
+
