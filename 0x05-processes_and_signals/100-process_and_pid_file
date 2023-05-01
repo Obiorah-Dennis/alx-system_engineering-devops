@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# This script is displaying "pids"
+
+# Create the PID file
+echo $$ > /var/run/myscript.pid
+
+# Define a function to handle the SIGTERM and SIGQUIT signals
+function terminate {
+    # Delete the PID file
+    rm /var/run/myscript.pid
+    # Display a message
+    echo "Received SIGTERM or SIGQUIT signal. Deleting PID file and terminating."
+    # Terminate the script
+    exit
+}
+
+# Define a function to handle the SIGINT signal
+function interrupt {
+    # Display a message
+    echo "Received SIGINT signal. Y U no love me?!"
+}
+
+# Trap the SIGTERM, SIGQUIT, and SIGINT signals and call the corresponding functions
+trap terminate SIGTERM SIGQUIT
+trap interrupt SIGINT
+
+# Display a message indefinitely
+while true
+do
+    echo "To infinity and beyond!"
+    sleep 2
+done
+
+# The script will terminate when it receives a SIGTERM or SIGQUIT signal and the corresponding function is called.
+
