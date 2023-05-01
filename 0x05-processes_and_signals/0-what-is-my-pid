@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# This script is displaying "its own PID" 10 times
+
+echo "My PID is $$"
+
