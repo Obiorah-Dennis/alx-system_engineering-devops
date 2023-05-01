@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# This script is displaying "stop PID"
+
+if [ -z "$PID" ]; then
+  echo "Process '4-to_infinity_and_beyond' is not running."
+else
+  echo "Stopping process '4-to_infinity_and_beyond' with PID $PID"
+  kill -2 "$PID"
+fi
+
