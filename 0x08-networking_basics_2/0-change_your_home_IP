@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# about network areas
+
+sudo nano /etc/hosts
+127.0.0.2 localhost
+sudo nano /etc/resolv.conf
+nameserver 8.8.8.8
+

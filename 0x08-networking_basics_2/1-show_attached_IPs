@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# about network areas
+
+
+ifconfig | grep "inet " | awk '{print $2}'
+
