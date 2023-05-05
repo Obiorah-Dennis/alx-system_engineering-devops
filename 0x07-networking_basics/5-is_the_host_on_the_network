@@ -7,4 +7,3 @@ if [ "$#" -ne 1 ]; then
 fi
 
 ping -c 5 "$1"
-
