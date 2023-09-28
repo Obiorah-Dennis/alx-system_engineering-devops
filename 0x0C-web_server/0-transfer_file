@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Script to transfer file from local system to remote system.
+# Script to transfer file from local system to remote system.
 if [ $# -ge 3 ]; then
     PATH_TO_FILE=$1
     IP=$2
@@ -15,3 +16,4 @@ if [ $# -ge 3 ]; then
 else
     echo "Usage: 0-transfer_file PATH_TO_FILE IP USERNAME PATH_TO_SSH_KEY"
 fi
+
