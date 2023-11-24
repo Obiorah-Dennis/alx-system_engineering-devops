@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
-# This script is displaying "infinity and beyond"
-
-while true; do
-  echo "To infinity and beyond"
-  sleep 2
+# script to use infinite loop & sleep
+var=0
+while [ $var ]; do
+echo 'To infinity and beyond'
+sleep 2
 done
-

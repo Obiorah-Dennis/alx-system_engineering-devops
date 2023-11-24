@@ -1,12 +1,4 @@
 #!/usr/bin/env bash
-# This script is displaying "stop PID"
-PID=$(pgrep -f "4-to_infinity_and_beyond")
-
-if [ -z "$PID" ]; then
-  echo "Process '4-to_infinity_and_beyond' is not running."
-else
-  echo "Stopping process '4-to_infinity_and_beyond' with PID $PID"
-  # Using kill command to stop the process with the given PID
-  kill "$PID"
-fi
-
+# script to kill a process using kill and pgrep
+kill_pid=$(pgrep -a "bash" | grep "4-to_infinity" | cut -d' ' -f1)
+kill "$kill_pid"

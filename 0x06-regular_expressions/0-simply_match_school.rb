@@ -1,6 +1,4 @@
 #!/usr/bin/env ruby
-School
-school
-ahSchool
-schoolhey
-Schoolling?
+
+regex = /School/
+puts ARGV[0].scan(regex).join

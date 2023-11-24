@@ -1,11 +1,4 @@
 #!/usr/bin/env bash
-# This script is displaying "Beheaded process PID"
-
-if [ -z "$PID" ]; then
-  echo "Process '7-highlander' is not running."
-else
-  echo "Stopping process '7-highlander' with PID $PID"
-
-  kill -15 "$PID"
-fi
-
+# destroying a process even if it protects SIGTERM
+id=$(pgrep -f './7-highlander')
+kill -s SIGKILL "$id"

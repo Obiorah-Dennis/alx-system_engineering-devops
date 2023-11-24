@@ -1,27 +1,34 @@
 #!/usr/bin/env bash
-# add a HTTP Header and keep the configuration
-# https://www.digitalocean.com/community/tutorials/how-to-configure-nginx-to-use-custom-error-pages-on-ubuntu-14-04
-# configure a new nginx web server
-# install the Nginx
+# configure web-02 to be identical to web-01
+# The name of custom HTTP header must be X-Served-By
+# The value of custom HTTP header must be the hostname of the server Nginx is running on
+#sudo sed -i 's/server_name _;.*/server_name _;\n\tadd_header X-Served-By \$hostname;/' /etc/nginx/sites-enabled/default 
 sudo apt-get -y update
 sudo apt-get -y install nginx
-# enable pass of traffic in the port 80
 sudo ufw allow 'Nginx HTTP'
-# redirect
-var="server_name _;\n\trewrite ^\/redirect_me https:\/\/www.youtube.com\/watch?v=QH2-TGUlwu4 permanent;"
-cd /etc/nginx/sites-available/
-sudo sed -i "s/server_name _;/$var/" default
-cd -
-# adding message to 404 not found
-echo -e "Ceci n'est pas une page\n" | sudo tee /var/www/html/404_page.html
-# adding a new line inside /etc/nginx/sites-available/default
-var404="server_name _;\n\terror_page 404 \/404_page.html;\n\tlocation = \/404_page.html {\n\t\troot \/var\/www\/html;\n\t\tinternal;\n\t}"
-cd /etc/nginx/sites-available/
-sudo sed -i "s/server_name _;/$var404/" default
-cd -
-# restart Nginx service for get changes
-name=$HOSTNAME
-# configure the file nginx.conf in order the set the header
-sudo sed -i "s/include \/etc\/nginx\/sites-enabled\/\*;/include \/etc\/nginx\/sites-enabled\/\*;\n\t# Adding Header/" /etc/nginx/nginx.conf
-sudo sed -i "s/# Adding Header/# Adding Header \n\tadd_header X-Served-By $name;/" /etc/nginx/nginx.conf
+sudo mkdir -p /var/www/html /var/www/error
+sudo chmod -R 755 /var/www
+echo 'Hello World!' > /var/www/html/index.html
+echo "Ceci n'est pas une page" > /var/www/html/404.html
+server_config=\
+"server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+	root /var/www/html;
+	index index.html index.htm index.nginx-debian.html;
+	server_name _;
+	add_header X-Served-By \$hostname;
+	location / {
+		try_files \$uri \$uri/ =404;
+	}
+	if (\$request_filename ~ redirect_me){
+		rewrite ^ https://youtube.com permanent;
+	}
+	error_page 404 /404.html;
+	location = /404.html {
+		internal;
+	}
+}"
+
+echo "$server_config" > /etc/nginx/sites-enabled/default
 sudo service nginx restart

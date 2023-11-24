@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
-# This script is displaying "to infinity and beyond indefinitely PID"
-
-if [ -z "$PID" ]; then
-  echo "Process '7-highlander' is not running."
-else
-  echo "Stopping process '7-highlander' with PID $PID"
-  kill -15 "$PID"
-fi
-
+# script for intercepting SIGTERM
+const=0
+trap 'echo "I am invincible!!!"' SIGTERM
+while [ $const ]; do
+echo 'To infinity and beyond'
+sleep 2
+done

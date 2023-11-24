@@ -1,7 +1,3 @@
 #!/usr/bin/env bash
-# This script is displaying "show your bash pid"
-
-echo "PID and process name of processes containing the word 'bash':"
-
-pgrep -f bash | xargs ps -p | awk '{print $1, $4}'
-
+# script using pgrep for finding pids!
+pgrep -l "bash"

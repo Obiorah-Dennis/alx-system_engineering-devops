@@ -1,35 +1,24 @@
 #!/usr/bin/env bash
-# This script is displaying "pids"
+# Does the following:
+#   Create a file /var/run/myscript.pid containing the script PID.
+#   Displays "To infinity and beyond" indefinitely
+#   Displays "I hate the kill command" upon receiving a SIGTERM
+#   Displays "Y U no love me?!" upon receiving a SIGINT
+#   Deletes the file /var/run/myscript.pid and terminates upon
+#+  receiving a SIGQUIT or SIGTERM.
 
-# Create the PID file
-echo $$ > /var/run/myscript.pid
-
-# Define a function to handle the SIGTERM and SIGQUIT signals
-function terminate {
-    # Delete the PID file
-    rm /var/run/myscript.pid
-    # Display a message
-    echo "Received SIGTERM or SIGQUIT signal. Deleting PID file and terminating."
-    # Terminate the script
-    exit
+terminator() {
+  rm /var/run/myscript.pid
+  exit
 }
 
-# Define a function to handle the SIGINT signal
-function interrupt {
-    # Display a message
-    echo "Received SIGINT signal. Y U no love me?!"
-}
+echo "$$" > /var/run/myscript.pid
 
-# Trap the SIGTERM, SIGQUIT, and SIGINT signals and call the corresponding functions
-trap terminate SIGTERM SIGQUIT
-trap interrupt SIGINT
-
-# Display a message indefinitely
 while true
 do
-    echo "To infinity and beyond!"
-    sleep 2
+  echo "To infinity and beyond"
+  sleep 2
+  trap 'echo "Y U no love me?!"' SIGINT
+  trap 'echo "I hate the kill command" && terminator' SIGTERM
+  trap 'terminator' SIGQUITgit 
 done
-
-# The script will terminate when it receives a SIGTERM or SIGQUIT signal and the corresponding function is called.
-

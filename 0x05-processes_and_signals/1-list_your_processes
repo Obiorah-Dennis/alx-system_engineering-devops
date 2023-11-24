@@ -1,11 +1,3 @@
 #!/usr/bin/env bash
-# This script is displaying "all processes"
-
-
-echo "List of currently running processes:"
-
-# Using the ps command to display process information
-ps axjf
-
-# Note: The "j" option displays the process hierarchy in a tree format.
-
+# a Bash script that displays a list of currently running processes.
+ps -auxf
